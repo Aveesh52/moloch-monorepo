@@ -9,6 +9,7 @@ import { ProposalStatus, getProposalCountdownText } from "../helpers/proposals";
 import { utils } from "ethers";
 import gql from "graphql-tag";
 import { getShareValue } from "helpers/currency";
+import GuildBank from "./GuildBank";
 
 const ProposalCard = ({ proposal }) => {
   let id = proposal.id;
@@ -139,6 +140,7 @@ const GET_ACTIVE_PROPOSAL_LIST = gql`
       totalShares
       summoningTime
     }
+ 
 
   }
 `;
@@ -146,6 +148,7 @@ const GET_ACTIVE_PROPOSAL_LIST = gql`
 let finishedLoadingRecords = false;
 const ProposalList = ({ isActive }) => {
   const { loading, error, data } = useQuery(GET_ACTIVE_PROPOSAL_LIST);
+  console.log(data);
   const {
     loading: completedLoading,
     error: completedError,
@@ -162,8 +165,11 @@ const ProposalList = ({ isActive }) => {
   if (loading) return <Loader size="massive" active />;
   if (error) throw new Error(error);
   if (completedError) throw new Error(completedError);
-  let { proposals, exchangeRate, meta, guildBankValue } = data;
+  let { proposals, exchangeRate, meta } = data;
+  let guildBankValue = "1200"
   const { totalShares } = meta;
+  console.log(totalShares);
+  console.log(guildBankValue);
   const shareValue = getShareValue(totalShares, guildBankValue);
 
   let completedProposals = [];

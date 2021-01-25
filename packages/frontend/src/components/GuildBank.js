@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, Image, Divider, Button } from "semantic-ui-react";
 import ethereumIcon from "assets/ethereumIcon.png";
 import { Query } from "react-apollo";
+import gql from "graphql-tag";
 
 const currencies = [
   {
